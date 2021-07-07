@@ -8,7 +8,7 @@ Dynamic mass-invitation program with multi-event assignments. Ideal for routine 
 **The Sidebar** is flexibly written, allowing the user to specify the columns for the labels and email(s). If more than one email column is referenced, separate by column letter and comma, e.g. "L, M". The program iterates through all rows by default, but a _selected range_ feature is provided in the dropdown.
 
 
-*Note: Program and formulas are set to start on row 6 in the Main Sheet. Labels are set for row 5 and invite URLs are set for row 6 in the Settings Sheet.*
+*Note: Program and formulas are set to start on row 6 in the Main Sheet. Labels are set for row 5 and invite URLs are set for row 6 in the Settings Sheet. Target **Calendar ID** is required in column M, row 2.*
 
 ![Main Sheet Preview](https://raw.githubusercontent.com/sajadmh/Automatic-Mass-Invitation-Program/main/Main%20Sheet%20Preview.png)
 
