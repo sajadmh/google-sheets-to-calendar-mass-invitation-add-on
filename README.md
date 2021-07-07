@@ -1,4 +1,4 @@
-# Auto-Invite-Program
+# Automatic Mass-Invitation Program
 Dynamic mass-invitation program with multi-event assignments. Ideal for routine onboarding. Invitation button generates a sheet by bundling all assignments and their respective email addresses and goes through invitation process using calendar patch. Invitation process is optimized, limiting API calls per event ID.
 
 **The Settings Sheet** handles any amount of labels/assignments. Below each label, Google Calendar invite URLs should be listed.
