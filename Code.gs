@@ -161,7 +161,7 @@ function inviteGuests() {
     // remove labels that are not present in Settings
     var lastColumn = settings.getLastColumn();
     var lastRow = settings.getLastRow();
-    var lookupLabelValues = settings.getRange(7, 1, 1, lastColumn).getValues();
+    var lookupLabelValues = settings.getRange(5, 1, 1, lastColumn).getValues();
     lookupLabelValues = lookupLabelValues[0];
 
     for (var i = 0; i < uniqueValues.length; i++) {
@@ -180,7 +180,7 @@ function inviteGuests() {
     for (var i = 0; i < uniqueValues.length; i++) {
         var index = lookupLabelValues.indexOf(uniqueValues[i][0]);
         if (index > -1) {
-            var labeltemp = settings.getRange(8, index + 1, lastRow, 1).getValues();
+            var labeltemp = settings.getRange(6, index + 1, lastRow, 1).getValues();
             labelList.push(labeltemp);
         }
     }
