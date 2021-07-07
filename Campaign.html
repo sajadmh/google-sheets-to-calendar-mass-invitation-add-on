@@ -1,0 +1,99 @@
+<?!= HtmlService.createHtmlOutputFromFile('Style').getContent(); ?>
+<!-- Below is the HTML code that defines the sidebar element structure -->
+
+<div class="sidebar">
+   <div>
+      <h1 class="splash">Invite Guests</h1>
+      <p>
+         Guest List:
+         <select class="guestlist" name="guestlist" id="guestlist">
+            <option value="1">Scan Entire List</option>
+            <option value="2">Selected Row Range</option>
+         </select>
+      </p>
+      <p id="rowStart" style="display:none">Start Row:
+         <input type="number" id="startRow" name="rowStart" min="1" onchange="updateStartInput(this.value)">
+      </p>
+      <p id="rowEnd" style="display:none">End Row:
+         <input type="number" id="endRow" name="rowEnd" min="1" onchange="updateEndInput(this.value)">
+      </p>
+      <p>Invite Label Column:
+         <input id="inviteColumn" type="text">
+      </p>
+      <p>Email Address List(s):
+         <input id="emailColumn" type="text">
+      </p>
+      <p>
+         <input class="button-apple" id="subButton" name="button-apple" value="Generate Sheet" type="button-apple" onclick="generateSheet();" onsubmit="disableButton()">
+      </p>
+      <p class="invite-result"><u>Do not click the button more than once or while the operation is
+         running.</u>
+      </p>
+      <ul class="log-result">
+      </ul>
+      <!-- <p class="invite-message"><u></u></p> -->
+   </div>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+<script>
+$('#guestlist').on('change', function() {
+    if (this.value == '2') {
+        $("#rowStart").css('display', 'block');
+        $("#rowEnd").css('display', 'block');
+        document.getElementById("startRow").value = '1';
+        document.getElementById("endRow").value = '1';
+    } else {
+        $("#rowStart").css('display', 'none');
+        $("#rowEnd").css('display', 'none');
+    }
+});
+
+function updateStartInput(value) {
+    if (value < 1) {
+        document.getElementById("startRow").value = '1';
+    } else {
+        document.getElementById("startRow").value = value;
+    }
+}
+
+function updateEndInput(value) {
+    if (value < 1) {
+        document.getElementById("endRow").value = '1';
+    } else {
+        document.getElementById("endRow").value = value;
+    }
+}
+
+function inviteSuccess(dataResults) {
+    $('#subButton').prop('value', "Generate Sheet");
+    $(".invite-result").html('<font color="#008000">🎉 Generated Sheets!</font>');
+}
+
+function inviteFailure(e) {
+    $('#subButton').prop('value', "Generate Sheet");
+    $(".invite-result").html('<font color="#FF0000">⚠️ Error: ' + e.message + '</font>');
+}
+
+function generateSheet() {
+    $(".invite-result").html('<font color="#000000">⏳ Generating...<br><br>Please do not click the button again until completed.</font>');
+    $('#subButton').prop('value', "Cancel");
+    var guestlist = document.getElementById("guestlist").value;
+    if (guestlist == '1') {
+        var inviteColumn = document.getElementById("inviteColumn").value;
+        var emailColumn = document.getElementById("emailColumn").value;
+        if (inviteColumn == '') inviteColumn = 'C'
+        if (emailColumn == '') emailColumn = 'O,P'
+        google.script.run.withSuccessHandler(inviteSuccess).withFailureHandler(inviteFailure).generateSheets('1', inviteColumn, emailColumn);
+    } else if (guestlist == '2') {
+        var inviteColumn = document.getElementById("inviteColumn").value;
+        var emailColumn = document.getElementById("emailColumn").value;
+        var startRow = document.getElementById("startRow").value;
+        var endRow = document.getElementById("endRow").value;
+        if (inviteColumn == '') inviteColumn = 'C'
+        if (emailColumn == '') emailColumn = 'O,P'
+        google.script.run.withSuccessHandler(inviteSuccess).withFailureHandler(inviteFailure).generateSheets('2', inviteColumn, emailColumn, startRow, endRow);
+    }
+}
+</script>
